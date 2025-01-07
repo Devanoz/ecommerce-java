@@ -1,5 +1,6 @@
 package com.ecommerce.fast_campus_ecommerce.model;
 
+import com.ecommerce.fast_campus_ecommerce.entity.User;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -43,4 +44,6 @@ public  class ProductRequest {
 
     @NotEmpty(message = "Harus ada satu kategori yang dipilih")
     private List<Long> categoryIds;
+
+    private User user;
 }
