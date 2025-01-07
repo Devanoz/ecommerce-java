@@ -3,15 +3,14 @@ package com.ecommerce.fast_campus_ecommerce.controllers;
 import com.ecommerce.fast_campus_ecommerce.model.PaginatedProductResponse;
 import com.ecommerce.fast_campus_ecommerce.model.ProductRequest;
 import com.ecommerce.fast_campus_ecommerce.model.ProductResponse;
+import com.ecommerce.fast_campus_ecommerce.model.UserInfo;
 import com.ecommerce.fast_campus_ecommerce.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("products")
@@ -50,6 +49,8 @@ public class ProductController {
 
     @PostMapping("/products")
     public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductRequest productRequest) {
+        UserInfo principal = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        productRequest.setUser(principal.getUser());
         ProductResponse productResponse = productService.create(productRequest);
         return ResponseEntity.ok(productResponse);
     }
