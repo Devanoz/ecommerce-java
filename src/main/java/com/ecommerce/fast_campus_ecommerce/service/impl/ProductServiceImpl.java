@@ -77,7 +77,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse create(ProductRequest productRequest) {
         List<Category> categories = getCategoriesByIds(productRequest.getCategoryIds());
 
-        Product product = Product.builder().name(productRequest.getName()).description(productRequest.getDescription()).price(productRequest.getPrice()).stockQuantity(productRequest.getStockQuantity()).weight(productRequest.getWeight()).build();
+        Product product = Product.builder()
+                .name(productRequest.getName())
+                .description(productRequest.getDescription())
+                .userId(productRequest.getUser().getUserId())
+                .price(productRequest.getPrice())
+                .stockQuantity(productRequest.getStockQuantity())
+                .weight(productRequest.getWeight())
+                .build();
 
         Product savedProduct = productRepository.save(product);
         List<ProductCategory> productCategories = categories.stream().map(category -> {
