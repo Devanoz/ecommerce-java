@@ -4,6 +4,7 @@ import com.ecommerce.fast_campus_ecommerce.common.errors.InvalidPasswordExceptio
 import com.ecommerce.fast_campus_ecommerce.model.AuthRequest;
 import com.ecommerce.fast_campus_ecommerce.model.UserInfo;
 import com.ecommerce.fast_campus_ecommerce.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,11 +13,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
     @Override
-    public UserInfo authentiate(AuthRequest authRequest) {
+    public UserInfo authenticate(AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
